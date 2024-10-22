@@ -1,4 +1,4 @@
-#!/home/sami/Desktop/TALN/myenv/bin/python
+#!/home/sami/Desktop/TP-M2/TALN/myenv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
