@@ -7,6 +7,7 @@ import nltk
 csv_files = ["Split.csv", "SplitLancaster.csv", "SplitPorter.csv",
              "Token.csv", "TokenLancaster.csv", "TokenPorter.csv"]
 display_names = [os.path.splitext(file)[0] for file in csv_files]
+collection_folder = "Collection"  # Folder containing D1, D2, ..., D6 text files
 
 # File selection
 st.title("Descriptor and Token Files")
@@ -34,6 +35,26 @@ if selected_file:
         except ValueError:
             st.write("Please enter a valid Document ID (numeric).")
 
+    if query:
+        try:
+            # Convert the query to an integer and construct the filename
+            doc_num = int(query)
+            if 1 <= doc_num <= 6:  # Ensure document number is within range
+                file_name = f"D{doc_num}.txt"
+                file_path = os.path.join(collection_folder, file_name)
+
+                # Check if the file exists and display its content
+                if os.path.exists(file_path):
+                    with open(file_path, "r") as file:
+                        file_content = file.read()
+                    st.write(f"Contents of Document {doc_num}:")
+                    st.text_area("File Content", file_content, height=400)
+                else:
+                    st.error(f"File {file_name} not found.")
+            else:
+                st.error("Please enter a number between 1 and 6.")
+        except ValueError:
+            st.error("Please enter a valid number.")
     # Display the filtered or full DataFrame
     st.write(f"Contents of {selected_display_name}")
     st.dataframe(df)
