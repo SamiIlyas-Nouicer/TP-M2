@@ -21,3 +21,9 @@ avantdernier(X,[_,Y,Z|L]) :- write('checking 1st element of a 2 size list !'), n
 %suppk/3
 suppk(1,[_|L],L) :- !.
 suppk(N, [X|L], [X|L1]) :- N1 is N-1, suppk(N1, L, L1).
+
+
+%trisel/2
+trisel([X], [X]) :- !.
+trisel([X,Y|L], [X|L1]) :- trisel([Y|L], L1).
+min([X,Y|L1],Z),

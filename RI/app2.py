@@ -8,23 +8,113 @@ import re
 # Configure the page
 st.set_page_config(page_title="Descriptor and Token Files", layout="centered")
 
+# Apply custom CSS for a sophisticated dark theme with padding
+st.markdown("""
+    <style>
+        /* General page style */
+        body {
+            background-color: #121212;
+            color: #D3D3D3;
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+        
+        /* Title and Header Styling */
+        .title-style {
+            color: #58A6FF;
+            font-size: 2.6em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 10px;
+        }
+
+        h2, h3 {
+            color: #58A6FF;
+            border-bottom: 2px solid #30363D;
+            padding-bottom: 8px;
+            margin-top: 30px;
+            padding-left: 10px;
+        }
+        
+        /* Dropdown and input styling */
+        .stSelectbox, .stTextInput, .stButton > button {
+            background-color: #30363D !important;
+            color: #D3D3D3 !important;
+            border-radius: 6px;
+            border: 1px solid #58A6FF;
+            padding: 10px 15px;
+        }
+        
+        /* Sidebar styling */
+        .stSidebar h2 {
+            color: #D3D3D3;
+            padding: 15px;
+        }
+        
+        /* Dataframe styling */
+        .stDataFrame {
+            background-color: #22272E;
+            border: 1px solid #30363D;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin-top: 25px;
+        }
+
+        /* Document viewer styling */
+        .document-viewer {
+            background-color: #22272E;
+            padding: 20px;
+            color: #D3D3D3;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            font-size: 1.1em;
+            line-height: 1.6;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Highlighted token styling */
+        .highlighted-token {
+            background-color: #FF6B6B;
+            color: #121212;
+            padding: 0 4px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Input field and button padding */
+        .stTextInput, .stButton > button {
+            padding: 15px;
+        }
+
+        /* Spacing adjustments for overall layout */
+        .streamlit-container {
+            padding: 25px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Page Title with new style
+st.markdown('<div class="title-style">📑 Descriptor and Token Files</div>',
+            unsafe_allow_html=True)
+
 # File configurations
 csv_files = ["Split.csv", "SplitLancaster.csv", "SplitPorter.csv",
              "Token.csv", "TokenLancaster.csv", "TokenPorter.csv"]
 display_names = [os.path.splitext(file)[0] for file in csv_files]
 collection_folder = "Collection"  # Folder containing D1, D2, ..., D6 text files
 
-# Set main title with styling
-st.title("📑 Descriptor and Token Files")
-
 # File selection dropdown
-selected_display_name = st.selectbox(
-    "Select a CSV file to explore:", display_names)
+selected_display_name = st.selectbox("Choose a CSV File:", display_names)
 selected_file = selected_display_name + ".csv"
 
 # Function to load CSV data
 
 
+@st.cache_data
 def load_data(file_path):
     return pd.read_csv(file_path)
 
@@ -35,16 +125,19 @@ if selected_file:
     df = load_data(file_path)
 
     # Sidebar for Document ID search
-    st.sidebar.subheader("🔍 Search Document ID")
+    st.sidebar.subheader("🔍 Search by Document ID")
     query = st.sidebar.text_input("Enter Document ID:")
 
     # Filter DataFrame based on Document ID
     if query:
         try:
             query = int(query)
-            df = df[df["Document"] == query].reset_index(drop=True)
+            if query < 1 or query > 6:
+                st.sidebar.warning("Document ID must be between 1 and 6.")
+            else:
+                df = df[df["Document"] == query].reset_index(drop=True)
         except ValueError:
-            st.sidebar.warning("Please enter a valid Document ID (numeric).")
+            st.sidebar.warning("Please enter a valid numeric Document ID.")
 
     # Section to view CSV file contents
     st.subheader(f"📂 Contents of {selected_display_name}")
@@ -54,8 +147,8 @@ if selected_file:
     st.subheader("📊 Document Statistics")
     vocabulary_size = df['Token'].nunique()  # Unique tokens count
     document_size = df['Frequency'].sum()  # Total frequency across all tokens
-    st.write(f"- **Vocabulary Size (Unique Tokens):** {vocabulary_size}")
-    st.write(f"- **Total Frequency (Document Size):** {document_size}")
+    st.write(f"- **Unique Tokens:** {vocabulary_size}")
+    st.write(f"- **Total Frequency:** {document_size}")
 
     # Word search with stemming based on file type
     st.subheader("🔍 Search for a Word")
@@ -82,59 +175,55 @@ if selected_file:
         if query:
             try:
                 doc_num = int(query)
-                if 1 <= doc_num <= 6:  # Ensure document number is within range
-                    file_name = f"D{doc_num}.txt"
-                    file_path = os.path.join(collection_folder, file_name)
+                file_name = f"D{doc_num}.txt"
+                file_path = os.path.join(collection_folder, file_name)
 
-                    if os.path.exists(file_path):
-                        with open(file_path, "r") as file:
-                            file_content = file.read()
+                if os.path.exists(file_path):
+                    with open(file_path, "r") as file:
+                        file_content = file.read()
 
-                        # Loop through filtered_df to highlight occurrences in the text
-                        highlighted_content = file_content  # Start with full content
-                        for index, row in filtered_df.iterrows():
-                            token = row['Token']
-                            occurrences = row['Occurrence']
+                    # Initialize highlighted_content with the file content
+                    highlighted_content = file_content
 
-                            # Ensure occurrences are a valid list
-                            positions = []
-                            try:
-                                positions = literal_eval(occurrences)
-                                if not isinstance(positions, list):
-                                    raise ValueError(
-                                        "Occurrences data is not a list.")
-                                positions = [int(pos) for pos in positions]
-                            except (ValueError, SyntaxError) as e:
-                                # st.warning(f"Occurrences for '{
-                                #            token}' are not formatted correctly.")
-                                continue  # Skip this token if it's not valid
+                    # Highlight occurrences of tokens in the filtered DataFrame
+                    for _, row in filtered_df.iterrows():
+                        token = row['Token']
+                        occurrences = row['Occurrence']
 
-                            # Highlight positions in the text for this token
-                            for pos in positions:
-                                # Create a regex to match the token at the correct position
-                                # We highlight only whole word matches at exact positions
-                                regex_pattern = r"\b" + \
-                                    re.escape(token) + r"\b"
-                                match = list(re.finditer(
-                                    regex_pattern, file_content))
-                                for m in match:
-                                    if m.start() == pos:
-                                        # Highlight the word occurrence
-                                        highlighted_content = highlighted_content.replace(
-                                            m.group(0),
-                                            f"""<span style='color: red; font-weight:bold;'>{
-                                                m.group(0)}</span>""",
-                                            1)  # Replace only the first occurrence
+                        # Ensure occurrences are a valid list
+                        try:
+                            positions = literal_eval(occurrences)
+                            if not isinstance(positions, list):
+                                raise ValueError(
+                                    "Occurrences data is not a list.")
+                            positions = [int(pos) for pos in positions]
+                        except (ValueError, SyntaxError):
+                            continue  # Skip this token if it's not valid
 
-                        # Display the content with highlighted positions
-                        st.write(
-                            f"**Contents of Document {doc_num} for Token '{search_word}':**")
-                        st.markdown(
-                            f"<div style='white-space: pre-wrap; border: none;padding:15px ; border-radius: 8px ;background-color: #262730;'>{highlighted_content}</div>", unsafe_allow_html=True)
-                    else:
-                        st.error(f"File {file_name} not found.")
+                        # Place unique markers around each token at the specified positions
+                        for pos in positions:
+                            highlighted_content = (
+                                highlighted_content[:pos]
+                                + f"[[[{token}]]]"
+                                + highlighted_content[pos + len(token):]
+                            )
+
+                    # Replace markers with HTML span for highlighting
+                    highlighted_content = re.sub(
+                        r"\[\[\[(.*?)\]\]\]",
+                        r"<span class='highlighted-token'>\1</span>",
+                        highlighted_content
+                    )
+
+                    # Display the content with highlighted positions
+                    st.write(
+                        f"**Contents of Document {doc_num} for Token '{search_word}':**")
+                    st.markdown(
+                        f"<div class='document-viewer'>{
+                            highlighted_content}</div>",
+                        unsafe_allow_html=True
+                    )
                 else:
-                    st.warning(
-                        "Please enter a document number between 1 and 6.")
+                    st.error(f"File {file_name} not found.")
             except ValueError:
                 st.warning("Please enter a valid document number.")
