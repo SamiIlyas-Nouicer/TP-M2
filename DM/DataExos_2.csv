@@ -1,0 +1,6 @@
+ID,items,item_count
+A,"['bench_heavy', 'ohp_heavy', 'ohp_medium', 'squat_medium', 'dead_medium', 'row_heavy', 'squat_heavy', 'dead_heavy', 'rest_sitting', 'reste_sitting', 'rest_standing']",11
+B,"['bench_heavy', 'bench_medium', 'ohp_heavy', 'ohp_medium', 'squat_medium']",5
+C,"['bench_heavy', 'ohp_heavy', 'ohp_heav', 'row_medium', 'row_heavy', 'raw_heavy', 'squat_heavy', 'dead_medium']",8
+D,"['squat_medium', 'squat_heavy', 'bench_medium', 'row_medium', 'raw_medium']",5
+E,"['bench_heavy', 'dead_medium', 'ohp_heavy', 'row_heavy', 'squat_heavy', 'dead_heavy', 'bench_medium', 'row_medium', 'rest_sitting', 'rest_standing']",10
