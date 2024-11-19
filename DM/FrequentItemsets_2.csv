@@ -1,0 +1,36 @@
+support,itemsets
+0.8,frozenset({'bench_heavy'})
+0.6,frozenset({'bench_medium'})
+0.6,frozenset({'dead_medium'})
+0.8,frozenset({'ohp_heavy'})
+0.6,frozenset({'row_heavy'})
+0.6,frozenset({'row_medium'})
+0.8,frozenset({'squat_heavy'})
+0.6,frozenset({'squat_medium'})
+0.6,"frozenset({'dead_medium', 'bench_heavy'})"
+0.8,"frozenset({'ohp_heavy', 'bench_heavy'})"
+0.6,"frozenset({'bench_heavy', 'row_heavy'})"
+0.6,"frozenset({'bench_heavy', 'squat_heavy'})"
+0.6,"frozenset({'dead_medium', 'ohp_heavy'})"
+0.6,"frozenset({'dead_medium', 'row_heavy'})"
+0.6,"frozenset({'dead_medium', 'squat_heavy'})"
+0.6,"frozenset({'ohp_heavy', 'row_heavy'})"
+0.6,"frozenset({'ohp_heavy', 'squat_heavy'})"
+0.6,"frozenset({'squat_heavy', 'row_heavy'})"
+0.6,"frozenset({'squat_heavy', 'row_medium'})"
+0.6,"frozenset({'dead_medium', 'bench_heavy', 'ohp_heavy'})"
+0.6,"frozenset({'dead_medium', 'bench_heavy', 'row_heavy'})"
+0.6,"frozenset({'dead_medium', 'bench_heavy', 'squat_heavy'})"
+0.6,"frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy'})"
+0.6,"frozenset({'ohp_heavy', 'bench_heavy', 'squat_heavy'})"
+0.6,"frozenset({'bench_heavy', 'squat_heavy', 'row_heavy'})"
+0.6,"frozenset({'dead_medium', 'ohp_heavy', 'row_heavy'})"
+0.6,"frozenset({'dead_medium', 'squat_heavy', 'ohp_heavy'})"
+0.6,"frozenset({'dead_medium', 'squat_heavy', 'row_heavy'})"
+0.6,"frozenset({'ohp_heavy', 'squat_heavy', 'row_heavy'})"
+0.6,"frozenset({'dead_medium', 'bench_heavy', 'ohp_heavy', 'row_heavy'})"
+0.6,"frozenset({'dead_medium', 'bench_heavy', 'squat_heavy', 'ohp_heavy'})"
+0.6,"frozenset({'dead_medium', 'bench_heavy', 'squat_heavy', 'row_heavy'})"
+0.6,"frozenset({'ohp_heavy', 'bench_heavy', 'squat_heavy', 'row_heavy'})"
+0.6,"frozenset({'dead_medium', 'squat_heavy', 'ohp_heavy', 'row_heavy'})"
+0.6,"frozenset({'squat_heavy', 'ohp_heavy', 'row_heavy', 'dead_medium', 'bench_heavy'})"
