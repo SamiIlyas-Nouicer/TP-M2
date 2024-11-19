@@ -1,0 +1,183 @@
+antecedents,consequents,antecedent support,consequent support,support,confidence,lift,representativity,leverage,conviction,zhangs_metric,jaccard,certainty,kulczynski
+frozenset({'bench_heavy'}),frozenset({'dead_medium'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),frozenset({'bench_heavy'}),0.8,0.8,0.8,1.0,1.25,1.0,0.15999999999999992,inf,0.9999999999999997,1.0,1.0,1.0
+frozenset({'bench_heavy'}),frozenset({'ohp_heavy'}),0.8,0.8,0.8,1.0,1.25,1.0,0.15999999999999992,inf,0.9999999999999997,1.0,1.0,1.0
+frozenset({'bench_heavy'}),frozenset({'row_heavy'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'row_heavy'}),frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'bench_heavy'}),frozenset({'squat_heavy'}),0.8,0.8,0.6,0.7499999999999999,0.9374999999999998,1.0,-0.04000000000000015,0.7999999999999995,-0.25000000000000083,0.6,-0.25000000000000083,0.7499999999999999
+frozenset({'squat_heavy'}),frozenset({'bench_heavy'}),0.8,0.8,0.6,0.7499999999999999,0.9374999999999998,1.0,-0.04000000000000015,0.7999999999999995,-0.25000000000000083,0.6,-0.25000000000000083,0.7499999999999999
+frozenset({'ohp_heavy'}),frozenset({'dead_medium'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'dead_medium'}),frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'row_heavy'}),frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'dead_medium'}),frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'squat_heavy'}),frozenset({'dead_medium'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'ohp_heavy'}),frozenset({'row_heavy'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'row_heavy'}),frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),frozenset({'squat_heavy'}),0.8,0.8,0.6,0.7499999999999999,0.9374999999999998,1.0,-0.04000000000000015,0.7999999999999995,-0.25000000000000083,0.6,-0.25000000000000083,0.7499999999999999
+frozenset({'squat_heavy'}),frozenset({'ohp_heavy'}),0.8,0.8,0.6,0.7499999999999999,0.9374999999999998,1.0,-0.04000000000000015,0.7999999999999995,-0.25000000000000083,0.6,-0.25000000000000083,0.7499999999999999
+frozenset({'row_heavy'}),frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'squat_heavy'}),frozenset({'row_heavy'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'row_medium'}),frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'squat_heavy'}),frozenset({'row_medium'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'bench_heavy'})",frozenset({'dead_medium'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'dead_medium'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'dead_medium'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'bench_heavy', 'dead_medium'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'bench_heavy'}),"frozenset({'ohp_heavy', 'dead_medium'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'ohp_heavy', 'bench_heavy'})",0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'dead_medium'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'row_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'bench_heavy'}),"frozenset({'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'bench_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'row_heavy'}),"frozenset({'bench_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'dead_medium'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'squat_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'squat_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'bench_heavy'}),"frozenset({'dead_medium', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'bench_heavy', 'dead_medium'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'bench_heavy'})",frozenset({'row_heavy'}),0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'row_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'row_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'bench_heavy', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'bench_heavy'}),"frozenset({'ohp_heavy', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'row_heavy'}),"frozenset({'ohp_heavy', 'bench_heavy'})",0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'bench_heavy'})",frozenset({'squat_heavy'}),0.8,0.8,0.6,0.7499999999999999,0.9374999999999998,1.0,-0.04000000000000015,0.7999999999999995,-0.25000000000000083,0.6,-0.25000000000000083,0.7499999999999999
+"frozenset({'ohp_heavy', 'squat_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'squat_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'bench_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'bench_heavy'}),"frozenset({'ohp_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'squat_heavy'}),"frozenset({'ohp_heavy', 'bench_heavy'})",0.8,0.8,0.6,0.7499999999999999,0.9374999999999998,1.0,-0.04000000000000015,0.7999999999999995,-0.25000000000000083,0.6,-0.25000000000000083,0.7499999999999999
+"frozenset({'bench_heavy', 'row_heavy'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'squat_heavy'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'row_heavy', 'squat_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'bench_heavy'}),"frozenset({'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'row_heavy'}),"frozenset({'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'bench_heavy', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'dead_medium'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'row_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'ohp_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'row_heavy'}),"frozenset({'ohp_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'dead_medium'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'squat_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'squat_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'dead_medium', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'ohp_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'ohp_heavy', 'dead_medium'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'dead_medium', 'row_heavy'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'dead_medium', 'squat_heavy'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'row_heavy', 'squat_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'dead_medium'}),"frozenset({'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'row_heavy'}),"frozenset({'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'row_heavy'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'squat_heavy'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'row_heavy', 'squat_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'row_heavy'}),"frozenset({'ohp_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'ohp_heavy', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'dead_medium', 'row_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'dead_medium', 'row_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'bench_heavy'})","frozenset({'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'dead_medium'})","frozenset({'bench_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'row_heavy'})","frozenset({'bench_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'dead_medium'})","frozenset({'ohp_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'row_heavy'})","frozenset({'ohp_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy'})","frozenset({'ohp_heavy', 'bench_heavy'})",0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'bench_heavy', 'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'bench_heavy'}),"frozenset({'ohp_heavy', 'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'row_heavy'}),"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'bench_heavy', 'squat_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'dead_medium', 'squat_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'dead_medium', 'squat_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'bench_heavy'})","frozenset({'dead_medium', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'dead_medium'})","frozenset({'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'squat_heavy'})","frozenset({'bench_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'dead_medium'})","frozenset({'ohp_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'squat_heavy'})","frozenset({'ohp_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'squat_heavy'})","frozenset({'ohp_heavy', 'bench_heavy'})",0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'bench_heavy', 'dead_medium', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'bench_heavy'}),"frozenset({'ohp_heavy', 'dead_medium', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'ohp_heavy', 'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'bench_heavy', 'dead_medium', 'row_heavy'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'dead_medium', 'squat_heavy'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'row_heavy', 'squat_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy', 'squat_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'dead_medium'})","frozenset({'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'row_heavy'})","frozenset({'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'squat_heavy'})","frozenset({'dead_medium', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy'})","frozenset({'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'squat_heavy'})","frozenset({'bench_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'row_heavy', 'squat_heavy'})","frozenset({'bench_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'bench_heavy'}),"frozenset({'dead_medium', 'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'bench_heavy', 'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'row_heavy'}),"frozenset({'bench_heavy', 'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'bench_heavy', 'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'bench_heavy', 'squat_heavy'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'row_heavy', 'squat_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'bench_heavy', 'row_heavy', 'squat_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'bench_heavy'})","frozenset({'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'row_heavy'})","frozenset({'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'squat_heavy'})","frozenset({'bench_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'row_heavy'})","frozenset({'ohp_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'squat_heavy'})","frozenset({'ohp_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'row_heavy', 'squat_heavy'})","frozenset({'ohp_heavy', 'bench_heavy'})",0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+frozenset({'ohp_heavy'}),"frozenset({'bench_heavy', 'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'bench_heavy'}),"frozenset({'ohp_heavy', 'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'row_heavy'}),"frozenset({'ohp_heavy', 'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'dead_medium', 'row_heavy'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'dead_medium', 'squat_heavy'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'row_heavy', 'squat_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy', 'squat_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'dead_medium'})","frozenset({'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'row_heavy'})","frozenset({'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'squat_heavy'})","frozenset({'dead_medium', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy'})","frozenset({'ohp_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'squat_heavy'})","frozenset({'ohp_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'row_heavy', 'squat_heavy'})","frozenset({'ohp_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'ohp_heavy'}),"frozenset({'dead_medium', 'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'dead_medium'}),"frozenset({'ohp_heavy', 'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'row_heavy'}),"frozenset({'ohp_heavy', 'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'squat_heavy'}),"frozenset({'ohp_heavy', 'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy', 'squat_heavy'})",frozenset({'dead_medium'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium', 'squat_heavy'})",frozenset({'row_heavy'}),0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'dead_medium', 'row_heavy', 'squat_heavy'})",frozenset({'ohp_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium', 'row_heavy'})",frozenset({'squat_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'dead_medium', 'row_heavy', 'squat_heavy'})",frozenset({'bench_heavy'}),0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'bench_heavy', 'squat_heavy'})","frozenset({'dead_medium', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'row_heavy', 'squat_heavy'})","frozenset({'ohp_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'dead_medium', 'squat_heavy'})","frozenset({'ohp_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy'})","frozenset({'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium'})","frozenset({'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'dead_medium', 'row_heavy'})","frozenset({'ohp_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'row_heavy', 'squat_heavy'})","frozenset({'bench_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'dead_medium', 'squat_heavy'})","frozenset({'bench_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy', 'squat_heavy'})","frozenset({'ohp_heavy', 'bench_heavy'})",0.6,0.8,0.6,1.0,1.25,1.0,0.12,inf,0.5,0.75,1.0,0.875
+"frozenset({'ohp_heavy', 'dead_medium', 'row_heavy'})","frozenset({'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'squat_heavy'})","frozenset({'ohp_heavy', 'dead_medium', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'bench_heavy'})","frozenset({'dead_medium', 'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+"frozenset({'bench_heavy', 'row_heavy'})","frozenset({'ohp_heavy', 'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'bench_heavy', 'dead_medium'})","frozenset({'ohp_heavy', 'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'squat_heavy'})","frozenset({'bench_heavy', 'dead_medium', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'row_heavy', 'squat_heavy'})","frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'squat_heavy'})","frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'row_heavy'})","frozenset({'bench_heavy', 'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'ohp_heavy', 'dead_medium'})","frozenset({'bench_heavy', 'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+"frozenset({'dead_medium', 'row_heavy'})","frozenset({'ohp_heavy', 'bench_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'bench_heavy'}),"frozenset({'ohp_heavy', 'dead_medium', 'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'squat_heavy'}),"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium', 'row_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'ohp_heavy'}),"frozenset({'bench_heavy', 'dead_medium', 'row_heavy', 'squat_heavy'})",0.8,0.6,0.6,0.7499999999999999,1.2499999999999998,1.0,0.12,1.5999999999999994,1.0000000000000002,0.75,0.3749999999999998,0.875
+frozenset({'row_heavy'}),"frozenset({'ohp_heavy', 'bench_heavy', 'dead_medium', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
+frozenset({'dead_medium'}),"frozenset({'ohp_heavy', 'bench_heavy', 'row_heavy', 'squat_heavy'})",0.6,0.6,0.6,1.0,1.6666666666666667,1.0,0.24,inf,1.0,1.0,1.0,1.0
