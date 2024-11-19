@@ -4,7 +4,6 @@ import altair as alt
 import os
 import nltk
 from ast import literal_eval
-import re
 
 # Configure the page
 st.set_page_config(page_title="Descriptor and Token Files", layout="centered")
@@ -188,86 +187,137 @@ else:
     search_words = [token.lower() for token in tokens]
 
     # Set up stemmer if needed
-    stemmers = {
-        "SplitPorter": nltk.PorterStemmer(),
-        "SplitLancaster": nltk.LancasterStemmer(),
-        "TokenPorter": nltk.PorterStemmer(),
-        "TokenLancaster": nltk.LancasterStemmer(),
-    }
-    stemmer = stemmers.get(selected_display_name)
+stemmers = {
+    "SplitPorter": nltk.PorterStemmer(),
+    "SplitLancaster": nltk.LancasterStemmer(),
+    "TokenPorter": nltk.PorterStemmer(),
+    "TokenLancaster": nltk.LancasterStemmer(),
+}
+stemmer = stemmers.get(selected_display_name)
 
-    stop_words = set(nltk.corpus.stopwords.words('english'))
+stop_words = set(nltk.corpus.stopwords.words('english'))
 
-    # Apply stemming to each search word if stemmer is available
-    if stemmer:
-        search_words = [stemmer.stem(word) for word in search_words]
+# Apply stemming to each search word if stemmer is available
+if stemmer:
+    search_words = [stemmer.stem(word) for word in search_words]
 
-    # Filter the DataFrame by each search word and combine results
-    filtered_dfs = [df[df['Token'].isin([word])] for word in search_words]
+# Filter the DataFrame by each search word and combine results
+filtered_dfs = [df[df['Token'].isin([word])] for word in search_words]
 
-    filtered_df = pd.concat(
-        filtered_dfs).drop_duplicates().reset_index(drop=True)
+filtered_df = pd.concat(
+    filtered_dfs).drop_duplicates().reset_index(drop=True)
 
-    # Display search results
-    st.write(f"**Results for words: {', '.join(search_words)}**")
-    st.dataframe(filtered_df)
+# Display search results
+st.write(f"**Results for words: {', '.join(search_words)}**")
+st.dataframe(filtered_df)
+# Number of Items per Document
+item_counts = filtered_df.groupby('Document').size().reset_index(name='Number of Items')
 
-    weight_sums = filtered_df.groupby(
-        'Document')['Poids'].sum().reset_index()
-    weight_sums.columns = ['Document', 'Total Weight']
+# Total Weight (Scalar Product) for Filtered Terms
+weight_sums = filtered_df.groupby('Document')['Poids'].sum().reset_index()
+weight_sums.columns = ['Document', 'Scalar']
 
-    # Display the aggregated DataFrame
-    st.subheader("📊 Total Weight per Document")
-    st.dataframe(weight_sums)
+# Create Scalar Product DataFrame
+scalar_product_df = weight_sums.copy()
 
-    # Optional: Display as a bar chart
-    st.write("### Bar Chart of Total Weight per Document")
-    chart = alt.Chart(weight_sums).mark_bar().encode(
-        x='Document:O',
-        y='Total Weight:Q',
-        color='Document:O'
-    ).properties(
-        width=600,
-        height=400
-    )
-    st.altair_chart(chart, use_container_width=True)
+# Squared Weights for All Terms in Each Document
+df['Squared_Weights'] = df['Poids'] ** 2
+squared_weight_sums = df.groupby('Document')['Squared_Weights'].sum().reset_index()
+squared_weight_sums.columns = ['Document', 'Sum of Squared Weights']
 
-    # Text File Viewer for selected Document ID
-    if query:
-        try:
-            doc_num = int(query)
-            file_name = f"D{doc_num}.txt"
-            file_path = os.path.join(collection_folder, file_name)
+# Merge Data for Cosine Measure
+merged_cosine_data = weight_sums.merge(item_counts, on='Document').merge(squared_weight_sums, on='Document')
 
-            if os.path.exists(file_path):
-                with open(file_path, "r") as file:
-                    file_content = file.read()
+# Compute Cosine Measure
+merged_cosine_data['Cosine'] = merged_cosine_data['Scalar'] / (
+    (merged_cosine_data['Number of Items'] ** 0.5) * (merged_cosine_data['Sum of Squared Weights'] ** 0.5)
+)
+RSV_df = merged_cosine_data[['Document', 'Cosine']]
 
-                # Highlight occurrences of tokens in the filtered DataFrame
-                highlighted_content = file_content
-                for _, row in filtered_df.iterrows():
-                    token = row['Token']
-                    occurrences = row['Occurrence']
+# Total Weight (Query Weight Sum) for Filtered Terms
+query_weight_sums = filtered_df.groupby('Document')['Poids'].sum().reset_index()
+query_weight_sums.columns = ['Document', 'Query Weight Sum']
 
-                    # Ensure occurrences are a valid list
-                    try:
-                        positions = literal_eval(occurrences)
-                        if not isinstance(positions, list):
-                            raise ValueError(
-                                "Occurrences data is not a list.")
-                        positions = [int(pos) for pos in positions]
-                    except (ValueError, SyntaxError):
-                        continue  # Skip this token if it's not valid
+# Total Weight (All Terms in Each Document)
+all_weight_sums = df.groupby('Document')['Poids'].sum().reset_index()
+all_weight_sums.columns = ['Document', 'Total Weight']
 
-                    # Place unique markers around each token at the specified positions
-                    for pos in positions:
-                        highlighted_content = highlighted_content[:pos] + f"<span class='highlighted-token'>{
-                            token}</span>" + highlighted_content[pos + len(token):]
+# Merge Data for Jacard Measure
+merged_jacard_data = query_weight_sums.merge(all_weight_sums, on='Document').merge(
+    squared_weight_sums, on='Document'
+).merge(item_counts, on='Document')
 
-                st.markdown(f"<div class='document-viewer'>{highlighted_content}</div>",
-                            unsafe_allow_html=True)
-            else:
-                st.error("File not found.")
-        except ValueError:
-            st.sidebar.warning(
-                "Invalid Document ID. Please enter a number between 1 and 6.")
+# Compute Jacard Measure
+merged_jacard_data['Jacard'] = merged_jacard_data['Query Weight Sum'] / (
+    merged_jacard_data['Number of Items'] + merged_jacard_data['Sum of Squared Weights'] - merged_jacard_data['Query Weight Sum']
+)
+jacard_df = merged_jacard_data[['Document', 'Jacard']]
+
+
+# Display the aggregated DataFrame
+col1, col2, col3 = st.columns(3)
+
+# Display the DataFrames in their respective columns
+with col1:
+    st.subheader("📊 Scalar Product")
+    st.dataframe(scalar_product_df)
+
+with col2:
+    st.subheader("📊 Cosine Mesure")
+    st.dataframe(RSV_df)
+
+with col3:
+    st.subheader("📊 Jaccard Mesure")
+    st.dataframe(jacard_df)
+
+# Optional: Display as a bar chart
+st.write("### Bar Chart of Total Weight per Document")
+chart = alt.Chart(weight_sums).mark_bar().encode(
+    x='Document:O',
+    y='Total Weight:Q',
+    color='Document:O'
+).properties(
+    width=600,
+    height=400
+)
+st.altair_chart(chart, use_container_width=True)
+
+# Text File Viewer for selected Document ID
+if query:
+    try:
+        doc_num = int(query)
+        file_name = f"D{doc_num}.txt"
+        file_path = os.path.join(collection_folder, file_name)
+
+        if os.path.exists(file_path):
+            with open(file_path, "r") as file:
+                file_content = file.read()
+
+            # Highlight occurrences of tokens in the filtered DataFrame
+            highlighted_content = file_content
+            for _, row in filtered_df.iterrows():
+                token = row['Token']
+                occurrences = row['Occurrence']
+
+                # Ensure occurrences are a valid list
+                try:
+                    positions = literal_eval(occurrences)
+                    if not isinstance(positions, list):
+                        raise ValueError(
+                            "Occurrences data is not a list.")
+                    positions = [int(pos) for pos in positions]
+                except (ValueError, SyntaxError):
+                    continue  # Skip this token if it's not valid
+
+                # Place unique markers around each token at the specified positions
+                for pos in positions:
+                    highlighted_content = highlighted_content[:pos] + f"<span class='highlighted-token'>{
+                        token}</span>" + highlighted_content[pos + len(token):]
+
+            st.markdown(f"<div class='document-viewer'>{highlighted_content}</div>",
+                        unsafe_allow_html=True)
+        else:
+            st.error("File not found.")
+    except ValueError:
+        st.sidebar.warning(
+            "Invalid Document ID. Please enter a number between 1 and 6.")
