@@ -3,6 +3,7 @@ import pandas as pd
 import altair as alt
 import os
 import nltk
+import numpy as np
 from ast import literal_eval
 
 # Configure the page
@@ -123,7 +124,7 @@ def load_data(file_path):
 if selected_file:
     file_path = os.path.join("test", selected_file)
     df = load_data(file_path)
-
+    df_copy = df
     # Sidebar for Document ID search
     st.sidebar.subheader("🔍 Search by Document ID")
     query = st.sidebar.text_input("Enter Document ID:")
@@ -201,6 +202,7 @@ stop_words = set(nltk.corpus.stopwords.words('english'))
 if stemmer:
     search_words = [stemmer.stem(word) for word in search_words]
 
+
 # Filter the DataFrame by each search word and combine results
 filtered_dfs = [df[df['Token'].isin([word])] for word in search_words]
 
@@ -212,25 +214,24 @@ st.write(f"**Results for words: {', '.join(search_words)}**")
 st.dataframe(filtered_df)
 # Number of Items per Document
 item_counts = filtered_df.groupby('Document').size().reset_index(name='Number of Items')
-
+V = len(filtered_df['Token'].unique())
 # Total Weight (Scalar Product) for Filtered Terms
-weight_sums = filtered_df.groupby('Document')['Poids'].sum().reset_index()
-weight_sums.columns = ['Document', 'Scalar']
-
-# Create Scalar Product DataFrame
-scalar_product_df = weight_sums.copy()
+scalar_df = filtered_df.groupby('Document')['Poids'].sum().reset_index()
+scalar_df.columns = ['Document', 'Scalar']
+# Create Scalar Product DataFrame  
+scalar_product_df = scalar_df.copy()
 
 # Squared Weights for All Terms in Each Document
 df['Squared_Weights'] = df['Poids'] ** 2
 squared_weight_sums = df.groupby('Document')['Squared_Weights'].sum().reset_index()
 squared_weight_sums.columns = ['Document', 'Sum of Squared Weights']
-
+squared_weight_sums["square root of squared sums"] = squared_weight_sums['Sum of Squared Weights'] ** 0.5
 # Merge Data for Cosine Measure
-merged_cosine_data = weight_sums.merge(item_counts, on='Document').merge(squared_weight_sums, on='Document')
+merged_cosine_data = scalar_df.merge(item_counts, on='Document').merge(squared_weight_sums, on='Document')
 
 # Compute Cosine Measure
 merged_cosine_data['Cosine'] = merged_cosine_data['Scalar'] / (
-    (merged_cosine_data['Number of Items'] ** 0.5) * (merged_cosine_data['Sum of Squared Weights'] ** 0.5)
+    (np.sqrt(V)) * (squared_weight_sums["square root of squared sums"])
 )
 RSV_df = merged_cosine_data[['Document', 'Cosine']]
 
@@ -242,16 +243,23 @@ query_weight_sums.columns = ['Document', 'Query Weight Sum']
 all_weight_sums = df.groupby('Document')['Poids'].sum().reset_index()
 all_weight_sums.columns = ['Document', 'Total Weight']
 
+# st.dataframe(df)
+
+# st.dataframe(all_weight_sums)
+# st.dataframe(merged_cosine_data)
+
+
 # Merge Data for Jacard Measure
 merged_jacard_data = query_weight_sums.merge(all_weight_sums, on='Document').merge(
     squared_weight_sums, on='Document'
 ).merge(item_counts, on='Document')
 
 # Compute Jacard Measure
-merged_jacard_data['Jacard'] = merged_jacard_data['Query Weight Sum'] / (
-    merged_jacard_data['Number of Items'] + merged_jacard_data['Sum of Squared Weights'] - merged_jacard_data['Query Weight Sum']
+merged_jacard_data['Jacard'] = scalar_df['Scalar'] / (
+    V + merged_jacard_data['Sum of Squared Weights'] - scalar_df['Scalar']
 )
 jacard_df = merged_jacard_data[['Document', 'Jacard']]
+
 
 
 # Display the aggregated DataFrame
@@ -270,17 +278,31 @@ with col3:
     st.subheader("📊 Jaccard Mesure")
     st.dataframe(jacard_df)
 
-# Optional: Display as a bar chart
-st.write("### Bar Chart of Total Weight per Document")
-chart = alt.Chart(weight_sums).mark_bar().encode(
-    x='Document:O',
-    y='Total Weight:Q',
-    color='Document:O'
-).properties(
-    width=600,
-    height=400
-)
-st.altair_chart(chart, use_container_width=True)
+
+
+# BM25
+df_data = df.groupby("Document")["Frequency"].sum().reset_index()
+df_data.columns = ["Document","Taille Doc"]
+size_all = df_copy["Frequency"].sum()
+K = st.number_input("Enter the value of K (e.g., 1.5):", min_value=0.1, max_value=5.0, value=1.5, step=0.1)
+B = st.number_input("Enter the value of B (e.g., 0.75):", min_value=0.0, max_value=1.0, value=0.75, step=0.05)
+N = st.number_input("Enter the total number of documents (N):", min_value=1, max_value=1000, value=6, step=1)
+
+
+doc_taille_map = df_data.set_index("Document")["Taille Doc"]
+
+filtered_df["Taille Doc"] = filtered_df["Document"].map(doc_taille_map)
+
+filtered_df["BM-terme"] = (filtered_df["Frequency"] / 
+     (K * ((1 - B) + B * (filtered_df["Taille Doc"] / (size_all/6))) + filtered_df["Frequency"])
+     ) * np.log10((6 - filtered_df["Occurrence"] + 0.5) / (filtered_df["Occurrence"] + 0.5))
+
+
+
+df_BM = filtered_df.groupby("Document")["BM-terme"].sum().reset_index()
+df_BM.columns = ["Document","BM-25"]
+st.dataframe(df_BM)
+
 
 # Text File Viewer for selected Document ID
 if query:
