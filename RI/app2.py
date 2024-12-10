@@ -5,6 +5,7 @@ import os
 import nltk
 import numpy as np
 import re
+import pandasql as psql
 from ast import literal_eval
 
 
@@ -156,23 +157,7 @@ if selected_file:
     vocabulary_size = df['Token'].nunique()
     document_size = df['Frequency'].sum()
 
-    # Data for charts
-    stats_data = pd.DataFrame({
-        'Metric': ['Vocabulary Size', 'Document Size'],
-        'Value': [vocabulary_size, document_size]
-    })
 
-    # Display bar charts
-    st.write("### Bar Chart of Document Statistics")
-    chart = alt.Chart(stats_data).mark_bar().encode(
-        x='Metric',
-        y='Value',
-        color='Metric'
-    ).properties(
-        width=600,
-        height=400
-    )
-    st.altair_chart(chart, use_container_width=True)
 
     st.write("Vocabulary Size:", vocabulary_size)
     st.write("Document Size:", document_size)
@@ -331,112 +316,127 @@ st.dataframe(df_BM)
 # ******************************************************************************************************************************
 st.title("Appariement")
 
+# Logical Expression Validation Function
+def is_valid_logical_expression(expression):
 
-import pandas as pd
-import re
-import nltk
+    # Define allowed operators
+    operators = {"AND", "OR", "NOT"}
+    tokens = expression.strip().split()  # Tokenize the expression by spaces
 
-def process_query_for_eval(query, document_tokens):
-    """
-    Prepares the logical query by replacing logical operators and checking if terms exist in the document's tokens.
-    
-    Args:
-        query (str): The logical query to evaluate (e.g., 'term1 AND term2 OR term3').
-        document_tokens (set): A set of tokens present in the document.
-    
-    Returns:
-        bool: The result of the evaluated query.
-    """
-    # Replace logical operators with Python equivalents
-    query = query.replace("AND", "and").replace("OR", "or").replace("NOT", "not")
-    
-    # Check if terms exist in the document's tokens
-    terms = re.findall(r'\b\w+\b', query)  # Extract terms (words)
-    
-    for term in terms:
-        term_lower = term.lower()
-        if term_lower not in document_tokens:
-            query = query.replace(term, 'False')  # Replace missing term with 'False'
+    # Check for empty input
+    if not tokens:
+        return False
+
+    prev_token = None
+    for token in tokens:
+        token_upper = token.upper()
+
+        if token_upper in operators:
+            if token_upper == "NOT":
+                # 'NOT' is allowed before a term or after an operator
+                if prev_token and prev_token.upper() not in {"AND", "OR", None}:
+                    return False
+            else:
+                # 'AND' or 'OR' must follow a term or a valid 'NOT Term'
+                if prev_token is None or prev_token.upper() in {"AND", "OR", "NOT"}:
+                    return False
         else:
-            query = query.replace(term, 'True')   # Replace present term with 'True'
-    
-    try:
-        # Evaluate the final query using Python's eval function
-        return eval(query)
-    except Exception as e:
-        print(f"Error evaluating query: {query}")
-        return False  # In case of invalid query, return False
+            # Term validation: ensure it follows a valid pattern
+            if prev_token and prev_token.upper() not in {"AND", "OR", "NOT", None}:
+                return False
 
+        prev_token = token
 
-def check_logical_queries(df, queries):
+    # The last token must not be an operator (except 'NOT' can be alone)
+    if tokens[-1].upper() in {"AND", "OR", "NOT"}:
+        return False
+
+    return True
+
+def evaluate_query_expression(query_input, df, stopwords, token_type, stemmer_type):
     """
-    Check logical expressions for each document in the DataFrame based on a list of queries.
+    Evaluates a boolean query expression on the document terms.
     
-    Args:
-        df (DataFrame): DataFrame with tokens and their respective documents.
-        queries (list): List of logical queries to evaluate for each document.
-    
-    Returns:
-        DataFrame: A new DataFrame with evaluation results for each query per document.
+    :param query_input: The query input string to evaluate.
+    :param df: DataFrame containing documents and their terms.
+    :param stopwords: List of stopwords to filter out from the query.
+    :param token_type: The type of tokenization ('Split' or 'Regexp').
+    :param stemmer_type: The type of stemmer to use ('Lancaster' or 'Porter').
+    :return: A DataFrame with each document and its corresponding relevance ('True' or 'False').
     """
-    # Get a set of unique documents
-    documents = df['Document'].unique()
     
-    # Prepare a list to store results
-    results = []
+    # Tokenize the query input based on the specified token type
+    if token_type == 'Split':
+        boolean_tokens = query_input.split()
+    else:
+        boolean_tokens = nltk.RegexpTokenizer(
+            r'(?:[A-Za-z]\.)+|[A-Za-z]+[\-@]\d+(?:\.\d+)?|\d+[A-Za-z]+|\d+(?:[\.\,\-]\d+)?%?|\w+(?:[\-/]\w+)*'
+        ).tokenize(query_input)
     
-    # Iterate through documents and evaluate queries
-    for document in documents:
-        # Get all tokens in the document (case insensitive match)
-        document_tokens = set(df[df['Document'] == document]['Token'].str.lower())
-        
-        # Token count for the document
-        token_count = len(document_tokens)
-        
-        # Evaluate each query and store results
-        query_results = []
-        for query in queries:
-            result = process_query_for_eval(query, document_tokens)
-            query_results.append('TRUE' if result else 'FALSE')
-        
-        # Append the document number, token count, and query results
-        results.append([document, token_count, query_results])
+    # Filter out stopwords and operators
+    boolean_tokens = [
+        token for token in boolean_tokens if is_operator(token) or token not in stopwords
+    ]
     
-    # Create a DataFrame with the results, grouping queries in a list per document
-    result_df = pd.DataFrame(results, columns=['Document', 'Token_Count', 'Query_Results'])
+    # Apply stemming if specified
+    for i in range(len(boolean_tokens)):
+        if not is_operator(boolean_tokens[i]):
+            if stemmer_type == "Lancaster":
+                boolean_tokens[i] = nltk.LancasterStemmer().stem(boolean_tokens[i])
+            elif stemmer_type == "Porter":
+                boolean_tokens[i] = nltk.PorterStemmer().stem(boolean_tokens[i])
+    
+    # Filter out stopwords and operators again after stemming
+    boolean_tokens = [
+        token for token in boolean_tokens if is_operator(token) or token not in stopwords
+    ]
+    
+    # Get the unique document numbers
+    docs = df['Document'].unique().tolist()
+    relevance = []
+    
+    # Evaluate the expression for each document
+    for doc in docs:
+        termes = df[df['Document'] == doc]['Token'].tolist()
+        expression = ' '.join(boolean_tokens)
+
+        # Replace terms in the expression with 'True'
+        for terme in termes:
+            expression = expression.replace(terme, 'True')
+
+        # Replace words not in the set of operators or 'True'/'False' with 'False'
+        words = set(boolean_tokens)
+        for word in words:
+            if word not in {'AND', 'OR', 'NOT', 'and', 'or', 'not', 'True', 'False'}:
+                expression = expression.replace(word, 'False')
+
+        # Replace logical operators to match Python syntax
+        expression = expression.replace('AND', 'and').replace('OR', 'or').replace('NOT', 'not')
+
+        # Evaluate the boolean expression
+        relevance.append('True' if eval(expression) else 'False')
+    
+    # Create a DataFrame with document numbers and their relevance results
+    result_df = pd.DataFrame({
+        'Document': docs,
+        'Relevance': relevance
+    })
     
     return result_df
 
+# Helper function to check if the token is an operator
+def is_operator(token):
+    return token in {'AND', 'OR', 'NOT', 'and', 'or', 'not'}
 
+query_input = st.text_input("Enter a logical query expression:", key=2)
+stop_words = set(nltk.corpus.stopwords.words('english'))
 
-
-
-def evaluate_queries_for_all_docs(result_df):
-    """
-    Evaluate logical queries at once and get the overall result for each document.
-    
-    Args:
-        result_df (DataFrame): DataFrame with document, token count, and query results.
-    
-    Returns:
-        DataFrame: A DataFrame with evaluated results, showing 'TRUE' or 'FALSE' based on the OR operation.
-    """
-    # Combine query results with OR logic for each document
-    result_df['Query_Results'] = result_df['Query_Results'].apply(lambda x: 'TRUE' if 'TRUE' in x else 'FALSE')
-    return result_df
-
-
-# Input field for the boolean query in Streamlit
-query = st.text_input("Enter a boolean query:", key='2')
-
-# Process the query to apply stemming and tokenization
-query = process_search_words(selected_display_name, query)
-
-# Example DataFrame 'df' with token data
-result_df = check_logical_queries(df, [query])
-
-# Evaluate the overall query result based on OR operation
-result_df = evaluate_queries_for_all_docs(result_df)
-
-# Display the final DataFrame in Streamlit
-st.dataframe(result_df)
+if is_valid_logical_expression(query_input):
+    # If the logical expression is valid, proceed with evaluating the query
+    result_df = evaluate_query_expression(query_input, df, stop_words, 'Token', "Porter")
+    # Output the relevance results
+    st.write("Relevance Results:")
+    st.dataframe(result_df)
+else:
+    # If the logical expression is invalid, print a message or handle the error
+    st.error("Invalid logical expression.")
