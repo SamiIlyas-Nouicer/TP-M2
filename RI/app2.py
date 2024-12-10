@@ -4,11 +4,15 @@ import altair as alt
 import os
 import nltk
 import numpy as np
+import re
 from ast import literal_eval
+
+
+
 
 # Configure the page
 st.set_page_config(page_title="Descriptor and Token Files", layout="centered")
-
+nltk.download('stopwords')
 # Apply custom CSS for a sophisticated dark theme with padding
 st.markdown("""
     <style>
@@ -127,7 +131,7 @@ if selected_file:
     df_copy = df
     # Sidebar for Document ID search
     st.sidebar.subheader("🔍 Search by Document ID")
-    query = st.sidebar.text_input("Enter Document ID:")
+    query = st.sidebar.text_input("Enter Document ID:",key=0)
 
     # Filter DataFrame based on Document ID
     if query:
@@ -175,33 +179,55 @@ if selected_file:
 
     # Word search with stemming based on file type
     st.subheader("🔍 Search for Words")
-search_words = st.text_input(
-    "Enter words to search (separate by spaces or commas):")
-tokenizer = nltk.RegexpTokenizer(
-    r'(?:[A-Za-z]\.)+|[A-Za-z]+[\-@]\d+(?:\.\d+)?|\d+[A-Za-z]+|\d+(?:[\.\,\-]\d+)?%?|\w+(?:[\-/]\w+)*')
+    search_words = st.text_input("Enter words to search (separate by spaces or commas):",key=1)
 
-# Fix the condition here: checking explicitly
-if selected_display_name in ["Split", "SplitPorter", "SplitLancaster"]:
-    search_words = search_words.split()
-else:
-    tokens = tokenizer.tokenize(search_words)
-    search_words = [token.lower() for token in tokens]
+def process_search_words(selected_display_name, search_words):
+    """
+    Processes the search words based on the selected display name, including tokenization and stemming.
+    
+    Args:
+        selected_display_name (str): The selected display name for determining whether to apply stemming.
 
-    # Set up stemmer if needed
-stemmers = {
-    "SplitPorter": nltk.PorterStemmer(),
-    "SplitLancaster": nltk.LancasterStemmer(),
-    "TokenPorter": nltk.PorterStemmer(),
-    "TokenLancaster": nltk.LancasterStemmer(),
-}
-stemmer = stemmers.get(selected_display_name)
+    Returns:
+        list: A list of processed search words with stemming applied to terms only.
+    """
+    # Define tokenizer and stemmers
+    operator = re.compile(r'\b(?:AND|OR|NOT)\b')  # Match operators as uppercase
+    tokenizer = nltk.RegexpTokenizer(
+        r'(?:[A-Za-z]\.)+|[A-Za-z]+[\-@]\d+(?:\.\d+)?|\d+[A-Za-z]+|\d+(?:[\.\,\-]\d+)?%?|\w+(?:[\-/]\w+)*'
+    )
+    stemmers = {
+        "SplitPorter": nltk.PorterStemmer(),
+        "SplitLancaster": nltk.LancasterStemmer(),
+        "TokenPorter": nltk.PorterStemmer(),
+        "TokenLancaster": nltk.LancasterStemmer(),
+    }
+    stemmer = stemmers.get(selected_display_name)
+    stop_words = set(nltk.corpus.stopwords.words('english'))
 
-stop_words = set(nltk.corpus.stopwords.words('english'))
+    # Tokenize the search words
+    if selected_display_name in ["Split", "SplitPorter", "SplitLancaster"]:
+        search_words = search_words.split()  # Split by spaces or commas
+    else:
+        tokens = tokenizer.tokenize(search_words)
+        search_words = [token.lower() for token in tokens]
 
-# Apply stemming to each search word if stemmer is available
-if stemmer:
-    search_words = [stemmer.stem(word) for word in search_words]
+    # Apply stemming to terms only, not operators (keep operators in uppercase)
+    processed_words = []
+    for word in search_words:
+        if operator.match(word.upper()):
+            # Keep the operator in uppercase
+            processed_words.append(word.upper())
+        else:
+            # Apply stemming to terms
+            if stemmer:
+                processed_words.append(stemmer.stem(word))
+            else:
+                processed_words.append(word)
 
+    return processed_words
+
+search_words = process_search_words(selected_display_name, search_words)
 
 # Filter the DataFrame by each search word and combine results
 filtered_dfs = [df[df['Token'].isin([word])] for word in search_words]
@@ -302,44 +328,115 @@ filtered_df["BM-terme"] = (filtered_df["Frequency"] /
 df_BM = filtered_df.groupby("Document")["BM-terme"].sum().reset_index()
 df_BM.columns = ["Document","BM-25"]
 st.dataframe(df_BM)
+# ******************************************************************************************************************************
+st.title("Appariement")
 
 
-# Text File Viewer for selected Document ID
-if query:
-    try:
-        doc_num = int(query)
-        file_name = f"D{doc_num}.txt"
-        file_path = os.path.join(collection_folder, file_name)
+import pandas as pd
+import re
+import nltk
 
-        if os.path.exists(file_path):
-            with open(file_path, "r") as file:
-                file_content = file.read()
-
-            # Highlight occurrences of tokens in the filtered DataFrame
-            highlighted_content = file_content
-            for _, row in filtered_df.iterrows():
-                token = row['Token']
-                occurrences = row['Occurrence']
-
-                # Ensure occurrences are a valid list
-                try:
-                    positions = literal_eval(occurrences)
-                    if not isinstance(positions, list):
-                        raise ValueError(
-                            "Occurrences data is not a list.")
-                    positions = [int(pos) for pos in positions]
-                except (ValueError, SyntaxError):
-                    continue  # Skip this token if it's not valid
-
-                # Place unique markers around each token at the specified positions
-                for pos in positions:
-                    highlighted_content = highlighted_content[:pos] + f"<span class='highlighted-token'>{
-                        token}</span>" + highlighted_content[pos + len(token):]
-
-            st.markdown(f"<div class='document-viewer'>{highlighted_content}</div>",
-                        unsafe_allow_html=True)
+def process_query_for_eval(query, document_tokens):
+    """
+    Prepares the logical query by replacing logical operators and checking if terms exist in the document's tokens.
+    
+    Args:
+        query (str): The logical query to evaluate (e.g., 'term1 AND term2 OR term3').
+        document_tokens (set): A set of tokens present in the document.
+    
+    Returns:
+        bool: The result of the evaluated query.
+    """
+    # Replace logical operators with Python equivalents
+    query = query.replace("AND", "and").replace("OR", "or").replace("NOT", "not")
+    
+    # Check if terms exist in the document's tokens
+    terms = re.findall(r'\b\w+\b', query)  # Extract terms (words)
+    
+    for term in terms:
+        term_lower = term.lower()
+        if term_lower not in document_tokens:
+            query = query.replace(term, 'False')  # Replace missing term with 'False'
         else:
-            st.error("File not found.")
-    except ValueError:
-        st.sidebar.warning(
-            "Invalid Document ID. Please enter a number between 1 and 6.")
+            query = query.replace(term, 'True')   # Replace present term with 'True'
+    
+    try:
+        # Evaluate the final query using Python's eval function
+        return eval(query)
+    except Exception as e:
+        print(f"Error evaluating query: {query}")
+        return False  # In case of invalid query, return False
+
+
+def check_logical_queries(df, queries):
+    """
+    Check logical expressions for each document in the DataFrame based on a list of queries.
+    
+    Args:
+        df (DataFrame): DataFrame with tokens and their respective documents.
+        queries (list): List of logical queries to evaluate for each document.
+    
+    Returns:
+        DataFrame: A new DataFrame with evaluation results for each query per document.
+    """
+    # Get a set of unique documents
+    documents = df['Document'].unique()
+    
+    # Prepare a list to store results
+    results = []
+    
+    # Iterate through documents and evaluate queries
+    for document in documents:
+        # Get all tokens in the document (case insensitive match)
+        document_tokens = set(df[df['Document'] == document]['Token'].str.lower())
+        
+        # Token count for the document
+        token_count = len(document_tokens)
+        
+        # Evaluate each query and store results
+        query_results = []
+        for query in queries:
+            result = process_query_for_eval(query, document_tokens)
+            query_results.append('TRUE' if result else 'FALSE')
+        
+        # Append the document number, token count, and query results
+        results.append([document, token_count, query_results])
+    
+    # Create a DataFrame with the results, grouping queries in a list per document
+    result_df = pd.DataFrame(results, columns=['Document', 'Token_Count', 'Query_Results'])
+    
+    return result_df
+
+
+
+
+
+def evaluate_queries_for_all_docs(result_df):
+    """
+    Evaluate logical queries at once and get the overall result for each document.
+    
+    Args:
+        result_df (DataFrame): DataFrame with document, token count, and query results.
+    
+    Returns:
+        DataFrame: A DataFrame with evaluated results, showing 'TRUE' or 'FALSE' based on the OR operation.
+    """
+    # Combine query results with OR logic for each document
+    result_df['Query_Results'] = result_df['Query_Results'].apply(lambda x: 'TRUE' if 'TRUE' in x else 'FALSE')
+    return result_df
+
+
+# Input field for the boolean query in Streamlit
+query = st.text_input("Enter a boolean query:", key='2')
+
+# Process the query to apply stemming and tokenization
+query = process_search_words(selected_display_name, query)
+
+# Example DataFrame 'df' with token data
+result_df = check_logical_queries(df, [query])
+
+# Evaluate the overall query result based on OR operation
+result_df = evaluate_queries_for_all_docs(result_df)
+
+# Display the final DataFrame in Streamlit
+st.dataframe(result_df)
